@@ -1,0 +1,6 @@
+framework module AudioUtilityEngine {
+  umbrella header "AudioUtilityEngine.h"
+
+  export *
+  module * { export * }
+}

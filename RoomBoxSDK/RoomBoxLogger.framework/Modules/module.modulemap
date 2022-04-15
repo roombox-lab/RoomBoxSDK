@@ -1,0 +1,11 @@
+framework module RoomBoxLogger {
+  umbrella header "RoomBoxLogger-umbrella.h"
+
+  export *
+  module * { export * }
+}
+
+module RoomBoxLogger.Swift {
+    header "RoomBoxLogger-Swift.h"
+    requires objc
+}

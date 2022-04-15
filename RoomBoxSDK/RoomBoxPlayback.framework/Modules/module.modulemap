@@ -1,0 +1,11 @@
+framework module RoomBoxPlayback {
+  umbrella header "RoomBoxPlayback-umbrella.h"
+
+  export *
+  module * { export * }
+}
+
+module RoomBoxPlayback.Swift {
+    header "RoomBoxPlayback-Swift.h"
+    requires objc
+}

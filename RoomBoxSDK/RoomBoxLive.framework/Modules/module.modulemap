@@ -1,0 +1,11 @@
+framework module RoomBoxLive {
+  umbrella header "RoomBoxLive-umbrella.h"
+
+  export *
+  module * { export * }
+}
+
+module RoomBoxLive.Swift {
+    header "RoomBoxLive-Swift.h"
+    requires objc
+}

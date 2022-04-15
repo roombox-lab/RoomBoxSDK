@@ -1,0 +1,615 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.3.2 (swiftlang-1200.0.45 clang-1200.0.32.28)
+// swift-module-flags: -target arm64-apple-ios10.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name RoomBoxLive
+import AVFoundation
+import AgoraRtcEngineKit
+import AliyunOSSiOS
+import AudioToolbox
+import CommonCrypto
+import CoreTelephony
+import Dispatch
+import Foundation
+import Protobuf
+import RoomBoxConfigManager
+import RoomBoxIM
+@_exported import RoomBoxLive
+import RoomBoxLogger
+import RoomBoxPlayback
+import RoomBoxUtils
+import RxCocoa
+import RxSwift
+import Swift
+import SwiftProtobuf
+import TangSDK
+import UIKit
+import WebKit
+import XDFIJKMediaFramework
+import XDFRoomCommonBussiness
+import XdfRTC
+public typealias RBEventBusMiddle = RoomBoxLive.RBEventBusObservable & RoomBoxLive.RBEventBusPostable
+extension RoomBoxEventBus {
+  public var stick: RoomBoxLive.RBEventBusMiddle {
+    get
+  }
+}
+public protocol RBEventBusSafety {
+  var safe: RoomBoxLive.RBEventBusSafePostable { get }
+}
+extension RoomBoxEventBus : RoomBoxLive.RBEventBusSafety {
+  public var safe: RoomBoxLive.RBEventBusSafePostable {
+    get
+  }
+}
+@objc @_inheritsConvenienceInitializers public class RoomBoxClassInfoItem : ObjectiveC.NSObject {
+  @objc public var classId: Swift.String
+  @objc public var childClassId: Swift.String
+  @objc public var userId: Swift.String
+  @objc public var roleId: Swift.String
+  @objc public var loginUserStatus: Swift.String
+  @objc public var userName: Swift.String
+  @objc public var token: Swift.String
+  @objc public var classType: Swift.UInt32
+  @objc public var isNewRoom: Swift.Bool
+  @objc public var bizCode: Swift.String?
+  @objc public var baseInfo: Swift.String?
+  @objc public var className: Swift.String
+  @objc public var webUrl: Swift.String
+  @objc deinit
+  @objc override dynamic public init()
+}
+public protocol RBEventBusObservable {
+  func register<T>(on mode: RoomBoxLive.RBDispatchMode, priority: RoomBoxLive.RBEventBusPriority, messageEvent: @escaping (T) -> Swift.Void) -> RoomBoxLive.RoomBoxEventSubscription<T>
+}
+public enum RBEventBusPostError : Swift.Error {
+  case useless
+  public static func == (a: RoomBoxLive.RBEventBusPostError, b: RoomBoxLive.RBEventBusPostError) -> Swift.Bool
+  public var hashValue: Swift.Int {
+    get
+  }
+  public func hash(into hasher: inout Swift.Hasher)
+}
+public protocol RBEventBusPostable {
+  func post<T>(_ cargo: T)
+}
+public protocol RBEventBusSafePostable {
+  func post<T>(_ cargo: T) throws
+}
+extension RoomBoxEventBus : RxSwift.ReactiveCompatible {
+  public typealias ReactiveBase = RoomBoxLive.RoomBoxEventBus
+}
+extension Reactive where Base : RoomBoxLive.RoomBoxEventBus {
+  public func register<T>(_ type: T.Type) -> RxSwift.Observable<T>
+}
+public enum RBEventBusPriority {
+  case value(Swift.Int)
+  public static var low: RoomBoxLive.RBEventBusPriority {
+    get
+  }
+  public static var `default`: RoomBoxLive.RBEventBusPriority {
+    get
+  }
+  public static var high: RoomBoxLive.RBEventBusPriority {
+    get
+  }
+}
+public class RoomBoxEventBus {
+  public static let `default`: RoomBoxLive.RoomBoxEventBus
+  final public let domain: Swift.String
+  public var observers: [Swift.String : Any]
+  public init(domain: Swift.String)
+  @objc deinit
+}
+extension RoomBoxEventBus : RoomBoxLive.RBEventBusPostable {
+  public func post<T>(_ cargo: T)
+}
+extension RoomBoxEventBus : RoomBoxLive.RBEventBusObservable {
+  public func register<T>(on mode: RoomBoxLive.RBDispatchMode = .same, priority: RoomBoxLive.RBEventBusPriority = .`default`, messageEvent: @escaping (T) -> Swift.Void) -> RoomBoxLive.RoomBoxEventSubscription<T>
+}
+public enum RBDispatchMode {
+  case same
+  case main
+  public static func == (a: RoomBoxLive.RBDispatchMode, b: RoomBoxLive.RBDispatchMode) -> Swift.Bool
+  public var hashValue: Swift.Int {
+    get
+  }
+  public func hash(into hasher: inout Swift.Hasher)
+}
+public func EventID<T>(_ type: T.Type) -> Swift.String
+@_hasMissingDesignatedInitializers public class RoomBoxEventSubscriber<T> : ObjectiveC.NSObject {
+  @objc override dynamic public init()
+  @objc deinit
+}
+extension RoomBoxEventSubscription : RxSwift.Disposable {
+  public func dispose()
+}
+@_hasMissingDesignatedInitializers public class RoomBoxEventSubscription<T> {
+  final public let entity: RoomBoxLive.RoomBoxEventSubscriber<T>
+  final public let eventBus: RoomBoxLive.RoomBoxEventBus
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objc public class RoomBoxLive : ObjectiveC.NSObject {
+  public typealias RoomBoxCompletionClosure = (Swift.Bool, Swift.Int, UIKit.UIViewController?) -> Swift.Void
+  public typealias RoomBoxInfoUpdateCompetionClosure = () -> Swift.Void
+  public static var instanced: RoomBoxLive.RoomBoxLive
+  public var requestCount: Swift.Int
+  public var configModel: RoomBoxLive.RoomBoxPublicConfig?
+  public var roomInfo: RoomBoxLive.RoomBoxClassInfoItem?
+  public var lowPerformanceNeeded: Swift.Bool
+  public func destroy()
+  @discardableResult
+  @objc public class func enterClass(from vc: UIKit.UIViewController, uid: Swift.String, cid: Swift.String, token: Swift.String, cType: Swift.UInt32, lowPerformanceNeeded: Swift.Bool = false, bizCode: Swift.String?, completionClosure: @escaping RoomBoxLive.RoomBoxLive.RoomBoxCompletionClosure, delegate: RoomBoxLive.RoomBoxLiveDelegate?)
+  @objc public class func quickEnterClass(from vc: UIKit.UIViewController, userName: Swift.String, cid: Swift.String, nickName: Swift.String?, childOrgId: Swift.String?, childCId: Swift.String?, lowPerformanceNeeded: Swift.Bool = false, bizCode: Swift.String?, completionClosure: @escaping RoomBoxLive.RoomBoxLive.RoomBoxCompletionClosure, delegate: RoomBoxLive.RoomBoxLiveDelegate?)
+  @objc public class func enterWritingPad(from vc: UIKit.UIViewController, info: RoomBoxLive.RoomBoxClassInfoItem, bizCode: Swift.String?, completionClosure: @escaping RoomBoxLive.RoomBoxLive.RoomBoxCompletionClosure, delegate: RoomBoxLive.RoomBoxLiveDelegate?)
+  @objc public class func loginOutDestory()
+  @objc public class func enterEmergencyRoom(_ urlString: Swift.String, preOritation: UIKit.UIDeviceOrientation) -> UIKit.UIViewController
+  @objc public class func enterAamazingBox(from vc: UIKit.UIViewController, uid: Swift.String, cid: Swift.String, cType: Swift.UInt32, token: Swift.String, nickName: Swift.String, preOritation: UIKit.UIDeviceOrientation, completionClosure: @escaping RoomBoxLive.RoomBoxLive.RoomBoxCompletionClosure)
+  @objc deinit
+}
+@objc public protocol RoomBoxLiveDelegate : ObjectiveC.NSObjectProtocol {
+  @objc optional func roomLiveLeaveComplete()
+  @objc optional func roomLiveWillLeave()
+  @objc optional func roomLiveReceiveForceOutMessage()
+  @objc optional func roomLiveLoginFailed()
+  @objc optional func roomLivePreOrientation() -> UIKit.UIDeviceOrientation
+  @objc optional func roomLiveRoomLandscapeOrientation() -> UIKit.UIDeviceOrientation
+  @objc optional func roomLiveOperatingAction(info: RoomBoxLive.RoomBoxLiveOperationParam, operationDelegate: RoomBoxLive.RoomBoxLiveOperationDelegate) -> UIKit.UIView
+  @objc optional func roomLiveSmallWindowModeOrientation() -> UIKit.UIDeviceOrientation
+  @objc optional func roomLiveDidResumeRoom()
+}
+@objc public protocol RoomBoxLiveOperationDelegate : ObjectiveC.NSObjectProtocol {
+  @objc func roomLiveEnterSmallWindowMode()
+}
+@objc @_inheritsConvenienceInitializers @objcMembers public class RoomBoxLiveOperationParam : ObjectiveC.NSObject {
+  public var roleId: Swift.UInt32?
+  @objc public var token: Swift.String?
+  @objc public var userId: Swift.String?
+  public var containerSize: CoreGraphics.CGSize?
+  @objc public var url: Swift.String?
+  @objc deinit
+  @objc override dynamic public init()
+}
+public func roomboxDebugPrint(_ content: Swift.String)
+public func isBling() -> Swift.Bool
+public func isRoomBoxMainApp() -> Swift.Bool
+@objc @_inheritsConvenienceInitializers public class RoomBoxPublicConfig : ObjectiveC.NSObject {
+  @objc public var bundleName: Swift.String
+  @objc public var helpUrl: Swift.String
+  @objc deinit
+  @objc override dynamic public init()
+}
+public enum RtcEngineConnectionStateType : Swift.Int {
+  case RtcDisconnected
+  case RtcConnecting
+  case RtcConnected
+  case RtcReconnecting
+  case RtcFailed
+  public typealias RawValue = Swift.Int
+  public init?(rawValue: Swift.Int)
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+public enum RtcEngineConnectionChangedReason : Swift.Int {
+  case RtcConnecting
+  case RtcJoinSuccess
+  case RtcInterrupted
+  case RtcBannedByServer
+  case RtcJoinFailed
+  case RtcLeaveChannel
+  public typealias RawValue = Swift.Int
+  public init?(rawValue: Swift.Int)
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+public enum RtcEngineOfflineReason : Swift.UInt {
+  case RtcQuit
+  case RtcDropped
+  case RtcBecomeAudience
+  public typealias RawValue = Swift.UInt
+  public init?(rawValue: Swift.UInt)
+  public var rawValue: Swift.UInt {
+    get
+  }
+}
+public enum RtcEngineVideoRemoteState : Swift.Int {
+  case RtcStopped
+  case RtcRunning
+  case RtcFrozen
+  public typealias RawValue = Swift.Int
+  public init?(rawValue: Swift.Int)
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+public enum RtcEngineNetworkQuality : Swift.Int {
+  case RtcUnknown
+  case RtcExcellent
+  case RtcGood
+  case RtcPoor
+  case RtcBad
+  case RtcVeryBad
+  case RtcDown
+  public typealias RawValue = Swift.Int
+  public init?(rawValue: Swift.Int)
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+public enum RtcClientRole : Swift.Int {
+  case RtcClientBroadCaster
+  case RtcClientAudience
+  public typealias RawValue = Swift.Int
+  public init?(rawValue: Swift.Int)
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+public enum RtcProfileLevel : Swift.String {
+  case RtcVideoDimension120x120
+  case RtcVideoDimension160x120
+  case RtcVideoDimension180x180
+  case RtcVideoDimension240x180
+  case RtcVideoDimension320x180
+  case RtcVideoDimension240x240
+  case RtcVideoDimension320x240
+  case RtcVideoDimension424x240
+  case RtcVideoDimension360x360
+  case RtcVideoDimension480x360
+  case RtcVideoDimension640x360
+  case RtcVideoDimension480x480
+  case RtcVideoDimension640x480
+  case RtcVideoDimension840x480
+  case RtcVideoDimension960x720
+  case RtcVideoDimension1280x720
+  public typealias RawValue = Swift.String
+  public init?(rawValue: Swift.String)
+  public var rawValue: Swift.String {
+    get
+  }
+}
+@objc @_inheritsConvenienceInitializers public class RoomBoxRtcLiveManager : ObjectiveC.NSObject {
+  public class func sharedInstance(_ rtcType: RoomBoxLive.RtcInstance) -> RoomBoxLive.RoomBoxRtcLiveManager
+  public class func sharedInstanceDestory()
+  public func setLogPath(_ uid: Swift.String, with cid: Swift.String)
+  public func getLogPath() -> Swift.String?
+  public func rtcChangedCreateLog()
+  public class func achieveCurrentRtcInstanceType(_ rtcType: RoomBoxLive.RtcInstance) -> RoomBoxLive.RtcInstance
+  public class func achieveCurrentRtcEngineInit() -> Swift.Bool
+  public class func removeCurrentRtcEngineCBListener()
+  public class func starSwitchIng()
+  public class func isValid() -> Swift.Bool
+  @objc deinit
+  @objc override dynamic public init()
+}
+extension RoomBoxRtcLiveManager {
+  public func initCurrentRtcEngine(_ rtcId: Swift.String)
+}
+extension RoomBoxRtcLiveManager {
+  public class func setEnableVideo()
+  public class func setDisableVideo()
+  public class func setEnableLocalVideo(_ enabled: Swift.Bool)
+  public class func changeRtcEngine(_ rtcType: RoomBoxLive.RtcInstance) -> RoomBoxLive.RtcInstance
+  public class func setRemoteVideoStream(_ uid: Swift.UInt64, withVideo streamType: Swift.Int32)
+  public class func setEnableSpeakerphone(_ enableSpeaker: Swift.Bool)
+  public class func enableNetworkQuality()
+  public class func unableNetworkQuality()
+  public class func setupVideoProfile(_ level: RoomBoxLive.RtcProfileLevel)
+  public class func startRtcPreview()
+  public class func stopRtcPreview()
+  public class func setupLocalVideo(localVideoView: UIKit.UIView?, uid: Swift.UInt64)
+  public class func setupRemoteVideo(remoteVideoView: UIKit.UIView?, uid: Swift.UInt64)
+  public class func setupRemoteVideo(remoteVideoView: UIKit.UIView?, channel: Swift.String, uid: Swift.UInt64)
+  public class func joinChannelNoMuteALL(_ channelID: Swift.String, withUid uid: Swift.UInt64, withToken token: Swift.String?)
+  public class func joinChannelNoMuteLocal(_ channelID: Swift.String, withUid uid: Swift.UInt64, withToken token: Swift.String?)
+  public class func joinChannel(_ channelID: Swift.String, withUid uid: Swift.UInt64, withToken token: Swift.String?)
+  public class func leaveRtcChannel()
+  public class func setClientRole(_ role: RoomBoxLive.RtcClientRole)
+  public class func muteLocalAudioStream(_ mute: Swift.Bool)
+  public class func muteRemoteAudioStream(_ uid: Swift.UInt64, with mute: Swift.Bool)
+  public class func muteAllRemoteAudioStreams(_ mute: Swift.Bool)
+  public class func muteLocalVideoStream(_ mute: Swift.Bool)
+  public class func muteRemoteVideoStream(_ uid: Swift.UInt64, with mute: Swift.Bool)
+  public class func muteAllRemoteVideoStreams(_ mute: Swift.Bool)
+  public class func setRemoteRenderMode(_ uid: Swift.UInt64, with mode: Swift.UInt)
+  public class func isVideoRtcNormal(_ uid: Swift.UInt64) -> Swift.Bool
+  public class func setAudioSessionForWebView()
+  public class func setAudioSessionOperationRestriction(_ operation: Swift.UInt32)
+  public class func createRtcChannel(_ channelName: Swift.String) -> RoomBoxLive.RoomBoxRtcChannelInterface?
+  public class func registerFrameObserver()
+  public class func unregisterFrameObserver()
+  public class func localSnapshot(_ completion: ((UIKit.UIImage) -> Swift.Void)? = nil)
+}
+public enum AlertType : Swift.Int {
+  case oneButton
+  case oneLongButton
+  case twoButton
+  case textField
+  case warningLabel
+  public typealias RawValue = Swift.Int
+  public init?(rawValue: Swift.Int)
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+public typealias RoomBoxV2BaseAlertSureActionClosure = () -> Swift.Void
+public typealias RoomBoxV2BaseAlertCancelActionClosure = () -> Swift.Void
+public typealias RoomBoxV2BaseAlertSureWithTextFieldActionClosure = (Swift.String) -> Swift.Void
+public enum PopArrowDirection : Swift.Int {
+  case PopArrowDirection_None
+  case PopArrowDirection_Up
+  case PopArrowDirection_Left
+  case PopArrowDirection_Down
+  case PopArrowDirection_Right
+  public typealias RawValue = Swift.Int
+  public init?(rawValue: Swift.Int)
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+public enum DeviceInfoBottomStatus : Swift.Int {
+  case DeviceInfoBottomStatus_Normal
+  case DeviceInfoBottomStatus_Bad
+  public typealias RawValue = Swift.Int
+  public init?(rawValue: Swift.Int)
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+public enum DeviceInfoComponentsType : Swift.Int {
+  case DeviceInfoComponentsType_CPU
+  case DeviceInfoComponentsType_MEM
+  case DeviceInfoComponentsType_Delay
+  public typealias RawValue = Swift.Int
+  public init?(rawValue: Swift.Int)
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+public enum PopShowViewDirection : Swift.Int {
+  case unknow
+  case left
+  case right
+  case center_small
+  case center_big
+  public typealias RawValue = Swift.Int
+  public init?(rawValue: Swift.Int)
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+extension UIImage {
+  public func imageWithTintColor1(color: UIKit.UIColor) -> UIKit.UIImage
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class SDKProxy : ObjectiveC.NSObject {
+  public static var instance: RoomBoxLive.SDKProxy {
+    get
+  }
+  @objc deinit
+  public func initial()
+}
+extension NSObject {
+  public func showAlert(showInVc: UIKit.UIViewController, type: RoomBoxLive.AlertType, size: CoreGraphics.CGSize, title: Swift.String, content: Swift.String, leftButtonTitle: Swift.String, rightButtonTitle: Swift.String, sureActionClosure: RoomBoxLive.RoomBoxV2BaseAlertSureActionClosure? = nil, cancelActionClosure: RoomBoxLive.RoomBoxV2BaseAlertCancelActionClosure? = nil)
+  public func showTextFieldAlert(showInVc: UIKit.UIViewController, size: CoreGraphics.CGSize, title: Swift.String, content: Swift.String, leftButtonTitle: Swift.String, rightButtonTitle: Swift.String, rightButtonAction: @escaping RoomBoxLive.RoomBoxV2BaseAlertSureWithTextFieldActionClosure)
+}
+public func logMatialModuleDebug(_ message: @autoclosure () -> Swift.String)
+public func logMatialModuleError(_ message: @autoclosure () -> Swift.String)
+public func logMatialModuleInfo(_ message: @autoclosure () -> Swift.String)
+@objc @_hasMissingDesignatedInitializers open class Permission : ObjectiveC.NSObject {
+  public typealias Callback = (RoomBoxLive.PermissionStatus) -> Swift.Void
+  public static let microphone: RoomBoxLive.Permission
+  public static let camera: RoomBoxLive.Permission
+  final public let type: RoomBoxLive.PermissionType
+  public var cancelcallback: RoomBoxLive.Permission.Callback?
+  open var presentPrePermissionAlert: Swift.Bool
+  open var presentDeniedAlert: Swift.Bool
+  open var presentDisabledAlert: Swift.Bool
+  open var status: RoomBoxLive.PermissionStatus {
+    get
+  }
+  open var deniedAlert: RoomBoxLive.PermissionAlert {
+    get
+    set
+  }
+  open var disabledAlert: RoomBoxLive.PermissionAlert {
+    get
+    set
+  }
+  open func request(from vc: UIKit.UIViewController, _ callback: @escaping RoomBoxLive.Permission.Callback)
+  @objc override dynamic public init()
+  @objc deinit
+}
+extension Permission {
+  @objc override dynamic open var description: Swift.String {
+    @objc get
+  }
+  @objc override dynamic open var debugDescription: Swift.String {
+    @objc get
+  }
+}
+@objc @_hasMissingDesignatedInitializers open class PermissionAlert : ObjectiveC.NSObject {
+  open var title: Swift.String?
+  open var message: Swift.String?
+  open var cancel: Swift.String? {
+    get
+    set
+  }
+  open var settings: Swift.String? {
+    get
+    set
+  }
+  open var confirm: Swift.String? {
+    get
+    set
+  }
+  public func dismiss()
+  @objc override dynamic public init()
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class DeniedAlert : RoomBoxLive.PermissionAlert {
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class DisabledAlert : RoomBoxLive.PermissionAlert {
+  @objc deinit
+}
+public enum PermissionType {
+  case microphone
+  case camera
+  public static func == (a: RoomBoxLive.PermissionType, b: RoomBoxLive.PermissionType) -> Swift.Bool
+  public var hashValue: Swift.Int {
+    get
+  }
+  public func hash(into hasher: inout Swift.Hasher)
+}
+extension PermissionType : Swift.CustomStringConvertible {
+  public var description: Swift.String {
+    get
+  }
+}
+public enum PermissionStatus : Swift.String {
+  case authorized
+  case denied
+  case disabled
+  case notDetermined
+  public typealias RawValue = Swift.String
+  public init?(rawValue: Swift.String)
+  public var rawValue: Swift.String {
+    get
+  }
+}
+extension PermissionStatus : Swift.CustomStringConvertible {
+  public var description: Swift.String {
+    get
+  }
+}
+@objc @_inheritsConvenienceInitializers public class XDFRoomBoxColorPanelManager : ObjectiveC.NSObject {
+  @objc public static func config()
+  @objc deinit
+  @objc override dynamic public init()
+}
+final public class XDFRoomDoubleLinkedList<E> {
+  public init()
+  public init<S>(_ s: S) where E == S.Element, S : Swift.Sequence
+  @objc deinit
+}
+extension XDFRoomDoubleLinkedList : Swift.Collection {
+  final public var startIndex: Swift.Int {
+    get
+  }
+  final public var endIndex: Swift.Int {
+    get
+  }
+  final public func index(after i: Swift.Int) -> Swift.Int
+  final public func makeIterator() -> RoomBoxLive.XDFRoomDoubleLinkedList<E>.Iterator
+  final public subscript(position: Swift.Int) -> E {
+    get
+    set
+  }
+  public typealias Element = E
+  public typealias Index = Swift.Int
+  public typealias SubSequence = Swift.Slice<RoomBoxLive.XDFRoomDoubleLinkedList<E>>
+  public typealias Indices = Swift.DefaultIndices<RoomBoxLive.XDFRoomDoubleLinkedList<E>>
+}
+extension XDFRoomDoubleLinkedList {
+  public struct Iterator : Swift.IteratorProtocol {
+    public mutating func next() -> E?
+    public typealias Element = E
+  }
+}
+extension XDFRoomDoubleLinkedList {
+  final public func append(_ newElement: E)
+  final public func append<S>(contentsOf newElements: S) where E == S.Element, S : Swift.Sequence
+  final public func insert(_ newElement: E, at i: Swift.Int)
+  final public func insert<S>(contentsOf newElements: S, at i: Swift.Int) where E == S.Element, S : Swift.Collection
+}
+extension XDFRoomDoubleLinkedList {
+  @discardableResult
+  final public func remove(at position: Swift.Int) -> E
+  @discardableResult
+  final public func removefirstNode() -> E?
+  @discardableResult
+  final public func removelastNode() -> E?
+  final public func removeAll()
+}
+extension XDFRoomDoubleLinkedList {
+  final public func firstIndex(where predicate: (E) throws -> Swift.Bool) rethrows -> Swift.Int?
+  final public func lastIndex(where predicate: (E) throws -> Swift.Bool) rethrows -> Swift.Int?
+  final public func contains(where predicate: (E) throws -> Swift.Bool) rethrows -> Swift.Bool
+}
+extension XDFRoomDoubleLinkedList where E : Swift.Equatable {
+  final public func firstIndex(of element: E) -> Swift.Int?
+  final public func lastIndex(of element: E) -> Swift.Int?
+  final public func contains(_ element: E) -> Swift.Bool
+}
+extension XDFRoomDoubleLinkedList {
+  final public func toArray() -> [E]
+}
+extension XDFRoomDoubleLinkedList : Swift.ExpressibleByArrayLiteral {
+  convenience public init(arrayLiteral elements: E...)
+  public typealias ArrayLiteralElement = E
+}
+extension XDFRoomDoubleLinkedList : Swift.CustomDebugStringConvertible {
+  final public var debugDescription: Swift.String {
+    get
+  }
+}
+extension XDFRoomDoubleLinkedList {
+  final public func copy() -> RoomBoxLive.XDFRoomDoubleLinkedList<E>
+}
+@objc @_inheritsConvenienceInitializers public class XDFRoomImage : ObjectiveC.NSObject {
+  @objc deinit
+  @objc override dynamic public init()
+}
+public struct XDFRoomSizeConfig {
+  public static let minScreenLength: CoreGraphics.CGFloat
+  public static let maxScreenLength: CoreGraphics.CGFloat
+  public static let ipadProMaxScreenLength: CoreGraphics.CGFloat
+  public static let isiPadPro: Swift.Bool
+  public static func adapterSize(size fro: CoreGraphics.CGFloat) -> CoreGraphics.CGFloat
+  public static func isIphoneX() -> Swift.Bool
+}
+extension RoomBoxLive.RBEventBusPostError : Swift.Equatable {}
+extension RoomBoxLive.RBEventBusPostError : Swift.Hashable {}
+extension RoomBoxLive.RBDispatchMode : Swift.Equatable {}
+extension RoomBoxLive.RBDispatchMode : Swift.Hashable {}
+extension RoomBoxLive.RtcEngineConnectionStateType : Swift.Equatable {}
+extension RoomBoxLive.RtcEngineConnectionStateType : Swift.Hashable {}
+extension RoomBoxLive.RtcEngineConnectionStateType : Swift.RawRepresentable {}
+extension RoomBoxLive.RtcEngineConnectionChangedReason : Swift.Equatable {}
+extension RoomBoxLive.RtcEngineConnectionChangedReason : Swift.Hashable {}
+extension RoomBoxLive.RtcEngineConnectionChangedReason : Swift.RawRepresentable {}
+extension RoomBoxLive.RtcEngineOfflineReason : Swift.Equatable {}
+extension RoomBoxLive.RtcEngineOfflineReason : Swift.Hashable {}
+extension RoomBoxLive.RtcEngineOfflineReason : Swift.RawRepresentable {}
+extension RoomBoxLive.RtcEngineVideoRemoteState : Swift.Equatable {}
+extension RoomBoxLive.RtcEngineVideoRemoteState : Swift.Hashable {}
+extension RoomBoxLive.RtcEngineVideoRemoteState : Swift.RawRepresentable {}
+extension RoomBoxLive.RtcEngineNetworkQuality : Swift.Equatable {}
+extension RoomBoxLive.RtcEngineNetworkQuality : Swift.Hashable {}
+extension RoomBoxLive.RtcEngineNetworkQuality : Swift.RawRepresentable {}
+extension RoomBoxLive.RtcClientRole : Swift.Equatable {}
+extension RoomBoxLive.RtcClientRole : Swift.Hashable {}
+extension RoomBoxLive.RtcClientRole : Swift.RawRepresentable {}
+extension RoomBoxLive.RtcProfileLevel : Swift.Equatable {}
+extension RoomBoxLive.RtcProfileLevel : Swift.Hashable {}
+extension RoomBoxLive.RtcProfileLevel : Swift.RawRepresentable {}
+extension RoomBoxLive.AlertType : Swift.Equatable {}
+extension RoomBoxLive.AlertType : Swift.Hashable {}
+extension RoomBoxLive.AlertType : Swift.RawRepresentable {}
+extension RoomBoxLive.PopArrowDirection : Swift.Equatable {}
+extension RoomBoxLive.PopArrowDirection : Swift.Hashable {}
+extension RoomBoxLive.PopArrowDirection : Swift.RawRepresentable {}
+extension RoomBoxLive.DeviceInfoBottomStatus : Swift.Equatable {}
+extension RoomBoxLive.DeviceInfoBottomStatus : Swift.Hashable {}
+extension RoomBoxLive.DeviceInfoBottomStatus : Swift.RawRepresentable {}
+extension RoomBoxLive.DeviceInfoComponentsType : Swift.Equatable {}
+extension RoomBoxLive.DeviceInfoComponentsType : Swift.Hashable {}
+extension RoomBoxLive.DeviceInfoComponentsType : Swift.RawRepresentable {}
+extension RoomBoxLive.PopShowViewDirection : Swift.Equatable {}
+extension RoomBoxLive.PopShowViewDirection : Swift.Hashable {}
+extension RoomBoxLive.PopShowViewDirection : Swift.RawRepresentable {}
+extension RoomBoxLive.PermissionType : Swift.Equatable {}
+extension RoomBoxLive.PermissionType : Swift.Hashable {}
+extension RoomBoxLive.PermissionStatus : Swift.Equatable {}
+extension RoomBoxLive.PermissionStatus : Swift.Hashable {}
+extension RoomBoxLive.PermissionStatus : Swift.RawRepresentable {}

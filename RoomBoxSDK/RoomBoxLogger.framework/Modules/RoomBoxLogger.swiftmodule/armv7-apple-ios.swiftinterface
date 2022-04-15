@@ -1,0 +1,149 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.3.2 (swiftlang-1200.0.45 clang-1200.0.32.28)
+// swift-module-flags: -target armv7-apple-ios10.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name RoomBoxLogger
+import AliyunLogProducer
+import Foundation
+import RoomBoxConfigManager
+@_exported import RoomBoxLogger
+import RoomBoxUtils
+import Swift
+import SwiftProtobuf
+import UIKit
+@objc @_inheritsConvenienceInitializers public class RBLogPathUtil : ObjectiveC.NSObject {
+  public class func dateFormat(_ date: Foundation.Date = Date(), format: Swift.String) -> Swift.String
+  public class var logRootDir: Swift.String {
+    get
+  }
+  public class var logDir: Swift.String {
+    get
+  }
+  public class func createLogDir()
+  public class func createDir(path: Swift.String)
+  public class func createFile(path: Swift.String)
+  @objc deinit
+  @objc override dynamic public init()
+}
+@_inheritsConvenienceInitializers @objc public class RBLogSchemeHandler : ObjectiveC.NSObject {
+  @objc public class func handleUrl(_ url: Foundation.URL) -> Swift.Bool
+  @objc deinit
+  @objc override dynamic public init()
+}
+@objc @_inheritsConvenienceInitializers public class RBLogUtil : ObjectiveC.NSObject {
+  @objc public static let shared: RoomBoxLogger.RBLogUtil
+  public var userId: Swift.String?
+  public var organizationId: Swift.String?
+  public var classId: Swift.String?
+  public var userRole: Swift.String?
+  public var userName: Swift.String?
+  @objc override dynamic public init()
+  public func logDeviceInfo()
+  @objc public class func uploadLog(userId: Swift.String?, showHud: Swift.Bool = true, completionBlock: @escaping (Swift.Bool, Swift.Error?) -> Swift.Void = { (result, error) in })
+  public class func createLogZip(showHud: Swift.Bool = true, completionBlock: @escaping (Swift.String) -> Swift.Void)
+  public class func uploadLogZipFile(_ filePath: Swift.String, showHud: Swift.Bool = true, completionBlock: @escaping (Swift.Bool, Swift.Error?) -> Swift.Void = { (result, error) in })
+  public class func uploadStudentNotToastLogZipFile(_ filePath: Swift.String, showHud: Swift.Bool = true, completionBlock: @escaping (Swift.Bool, Swift.Error?) -> Swift.Void = { (result, error) in })
+  public class func showToast(text: Swift.String = "操作成功")
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @objc public class RBRoomSendPointManager : ObjectiveC.NSObject {
+  public typealias InfoActionClosure = () -> Swift.Void
+  @objc public static let shared: RoomBoxLogger.RBRoomSendPointManager
+  public var roomboxSDKVersion: Swift.String
+  @objc public func configCurrentInfo()
+  @objc public func configBaseUrl(reportUrlString: Swift.String, urlString: Swift.String, actionUrlString: Swift.String, logHost: Swift.String)
+  public func buildRoleIdAction(loginClosure: @escaping RoomBoxLogger.RBRoomSendPointManager.InfoActionClosure)
+  @objc public func setCurrentUserId(userId: Swift.String?)
+  @objc public func setCurrentSid(sid: Swift.String?)
+  @objc public func setCurrentClassId(classId: Swift.String?)
+  @objc public func setCurrentTeacherRoomId(classId: Swift.String?)
+  @objc public func setCurrentAssistantRoomId(classId: Swift.String?)
+  @objc public func setCurrentRoleId(roleId: Swift.String?)
+  @objc public func setCurrentUserName(userName: Swift.String?)
+  @objc public func setCurrentWhiteboardVersion(version: Swift.String?)
+  @objc public func setCurrentClassRoomType(roomType: Swift.Int)
+  @objc public func setSDKversionValue(value: Swift.String)
+  @objc public func sendDownLoadMatial(name nameFro: Swift.String, address addressFro: Swift.String, size sizeFro: Swift.Float, spendTime timefro: Foundation.TimeInterval, isSuccess: Swift.Bool, errorCode: Swift.String)
+  @objc public func sendEnterClassRoom()
+  @objc public func sendOutClassRoom()
+  @objc public func sendCrashMessage(message messageFro: Swift.String)
+  @objc public func sendMicMessage(message: Swift.String)
+  @objc public func sendListenerMessage(uid: Swift.UInt64, isReciveMic: Swift.Bool)
+  @objc public func sendHandUpMessage()
+  @objc public func updateNetWorkMessage(rtcTQuality: Swift.Int, rtcRQuality: Swift.Int)
+  @objc public func updateAgoraNetWorkMessage(rtcTQuality: Swift.Int, rtcRQuality: Swift.Int)
+  @objc public func updateNetWorkTimeDelay(delay: Swift.Int32)
+  @objc public func updateAgoraNetWorkTimeDelay(delay: Swift.Int32)
+  @objc public func sendOneKeyFixPoint(matrialId: Swift.String)
+  @objc public func sendPlayBackPoint(playTime: Swift.Int32, playUrlString: Swift.String?)
+  @objc public func sendMicOpHandUp(handUp: Swift.Int)
+  @objc public func sendChatOpWatchTeacher(watchTeacher: Swift.Int)
+  @objc public func sendRequestHelpOp(helpOp: Swift.Int)
+  @objc public func sendQuizOpAnswer(quizId: Swift.Int, count: Swift.Int, list: [[Swift.String : Any]], timeSpend: Swift.Double, matId: Swift.Int, curPage: Swift.Int)
+  @objc public func sendReportIntellisensePoint(bodyType type: Swift.Int32, content fro: Swift.String)
+  @objc public func sendLoginAccountClickPoint(code: Swift.String, msg: Swift.String, account: Swift.String, loginType: Swift.String, url: Swift.String)
+  @objc public func sendClassScheduleClickPoint(code: Swift.String, msg: Swift.String, count: Swift.String, url: Swift.String)
+  @objc public func sendDownLoadMatialPoint(matId: Swift.String, urlString: Swift.String, serverFileSize: Swift.Int64, downFileSize: Swift.Int64, serverFileMd5: Swift.String, downFileMd5: Swift.String, startTime: Swift.UInt64, spendTime: Swift.UInt64, rspCode: Swift.Int, httpCode: Swift.Int)
+  @objc public func sendChatOpWatchTeacherActionPoint(watchTeacher: Swift.Int)
+  @objc public func sendRequestHelpOpActionPoint(helpOp: Swift.Int)
+  @objc public func sendQuizOpAnswerActionPoint(quizId: Swift.Int, count: Swift.Int, list: [[Swift.String : Any]], timeSpend: Swift.Double)
+  @objc public func sendNetworkActionPoint()
+  @objc public func sendWebActinClickPointData(body: Swift.String)
+  @objc deinit
+  @objc override dynamic public init()
+}
+@_inheritsConvenienceInitializers @objc public class RBRoomSendPointManagerSwiftBridge : ObjectiveC.NSObject {
+  @objc public static let shared: RoomBoxLogger.RBRoomSendPointManagerSwiftBridge
+  @objc public func sendPlayBackPoint(playTime: Swift.Int32, playUrlString: Swift.String?)
+  @objc deinit
+  @objc override dynamic public init()
+}
+public func roomboxLogDebug(_ message: @autoclosure () -> Swift.String)
+public func roomboxLogError(_ message: @autoclosure () -> Swift.String)
+public func roomboxLogInfo(_ message: @autoclosure () -> Swift.String)
+@objc public enum RoomBoxLogLevel : Swift.Int {
+  case error
+  case info
+  case debug
+  public typealias RawValue = Swift.Int
+  public init?(rawValue: Swift.Int)
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objcMembers public class RoomBoxLog : ObjectiveC.NSObject {
+  @objc public static var instance: RoomBoxLogger.RoomBoxLog
+  @objc deinit
+}
+extension RoomBoxLog {
+  @objc dynamic public func setDebug(isDebug: Swift.Bool)
+  @objc dynamic public func log(message: Swift.String, level: RoomBoxLogger.RoomBoxLogLevel)
+  @objc dynamic public func flush()
+}
+@_inheritsConvenienceInitializers @objc public class RoomBoxLogModel : ObjectiveC.NSObject {
+  @objc public var userId: Swift.String
+  @objc public var role: Swift.String
+  @objc public var sid: Swift.String
+  @objc public var classType: Swift.UInt32
+  @objc public var bizCode: Swift.String?
+  @objc public var baseInfo: Swift.String?
+  @objc deinit
+  @objc override dynamic public init()
+}
+@_inheritsConvenienceInitializers @objc public class RoomBoxLogProducer : ObjectiveC.NSObject {
+  @objc public class var sharedInstance: RoomBoxLogger.RoomBoxLogProducer {
+    @objc get
+  }
+  @objc override dynamic public init()
+  public func initClassMetricConfig(classType: Swift.UInt32)
+  @objc public func initRoomBoxLogModel(logModel: RoomBoxLogger.RoomBoxLogModel?)
+  @objc public class func addBasicInfo() -> [Swift.String : Swift.String]
+  @objc public func addBasicMetricLog(name: Swift.String, value: Swift.String, lablesDic: [Swift.String : Swift.String]? = nil, client: AliyunLogProducer.LogProducerClient, flush: Swift.Int32 = 0)
+  @objc public func addClassMetricLog(name: Swift.String, value: Swift.String, lablesDic: [Swift.String : Swift.String]? = nil, flush: Swift.Int32 = 0)
+  @objc public func addQualityMetricLog(name: Swift.String, value: Swift.String, lablesDic: [Swift.String : Swift.String]? = nil, flush: Swift.Int32 = 0)
+  @objc public func addMetricLog(name: Swift.String, value: Swift.String, lablesDic: [Swift.String : Swift.String]? = nil, flush: Swift.Int32 = 0)
+  @objc public func addActionLog(eventId: Swift.String, cid: Swift.String = "", logDic: [Swift.String : Swift.String]?, flush: Swift.Int32 = 0, client: AliyunLogProducer.LogProducerClient? = nil)
+  @objc public func addDetailLog(eventId: Swift.String, cid: Swift.String = "", logDic: [Swift.String : Swift.String]?, flush: Swift.Int32 = 0)
+  @objc deinit
+}
+extension RoomBoxLogger.RoomBoxLogLevel : Swift.Equatable {}
+extension RoomBoxLogger.RoomBoxLogLevel : Swift.Hashable {}
+extension RoomBoxLogger.RoomBoxLogLevel : Swift.RawRepresentable {}

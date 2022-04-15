@@ -1,0 +1,6 @@
+framework module AudioEngineCore {
+  umbrella header "AudioEngineCore.h"
+
+  export *
+  module * { export * }
+}

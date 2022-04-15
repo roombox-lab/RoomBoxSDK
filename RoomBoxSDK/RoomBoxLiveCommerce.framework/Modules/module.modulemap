@@ -1,0 +1,11 @@
+framework module RoomBoxLiveCommerce {
+  umbrella header "RoomBoxLiveCommerce-umbrella.h"
+
+  export *
+  module * { export * }
+}
+
+module RoomBoxLiveCommerce.Swift {
+    header "RoomBoxLiveCommerce-Swift.h"
+    requires objc
+}

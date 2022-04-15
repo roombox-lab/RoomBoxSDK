@@ -1,0 +1,308 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.3.2 (swiftlang-1200.0.45 clang-1200.0.32.28)
+// swift-module-flags: -target arm64-apple-ios10.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name RoomBoxPlayback
+import AliyunOSSiOS
+import AliyunPlayer
+import Foundation
+import RoomBoxConfigManager
+import RoomBoxLogger
+@_exported import RoomBoxPlayback
+import RoomBoxUtils
+import Swift
+import UIKit
+import WebKit
+import XDFRoomCommonBussiness
+import libABFramework
+@objc public protocol ABPlayerCoreProtocol : ObjectiveC.NSObjectProtocol {
+  @objc func play()
+  @objc func pause()
+  @objc func isPlaying() -> Swift.Bool
+  @objc func seek(position: Swift.Int64)
+  @objc func setPlaySpeed(speed: Swift.Float)
+  @objc func mute(mute: Swift.Bool)
+  @objc func stop()
+  @objc func retry()
+  @objc func trialEnd()
+  @objc var rate: Swift.Float { get set }
+  @objc var isMuted: Swift.Bool { get set }
+  @objc var duration: Swift.Int64 { get }
+  @objc var currentTime: Swift.Int64 { get }
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class ABPlayerCore : UIKit.UIView {
+  public var uploadTimer: Foundation.Timer?
+  @objc deinit
+  @objc override dynamic public func layoutSubviews()
+}
+extension ABPlayerCore : RoomBoxPlayback.ABPlayerCoreProtocol {
+  @objc dynamic public var rate: Swift.Float {
+    @objc get
+    @objc set
+  }
+  @objc dynamic public var isMuted: Swift.Bool {
+    @objc get
+    @objc set
+  }
+  @objc dynamic public var duration: Swift.Int64 {
+    @objc get
+  }
+  @objc dynamic public var currentTime: Swift.Int64 {
+    @objc get
+  }
+  @objc dynamic public func pause()
+  @objc dynamic public func stop()
+  @objc dynamic public func play()
+  @objc dynamic public func isPlaying() -> Swift.Bool
+  @objc dynamic public func seek(position: Swift.Int64)
+  @objc dynamic public func setPlaySpeed(speed: Swift.Float)
+  @objc dynamic public func mute(mute: Swift.Bool)
+  @objc dynamic public func retry()
+  @objc dynamic public func trialEnd()
+}
+@objc public protocol ABPlayerViewDelegate : ObjectiveC.NSObjectProtocol {
+  @objc func backButtonTapped()
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objc public class ABPlayerView : UIKit.UIView {
+  @objc weak public var delegate: RoomBoxPlayback.ABPlayerViewDelegate?
+  @objc override dynamic public init(frame: CoreGraphics.CGRect)
+  @objc deinit
+  @objc public func InitAmazingBoxEnv(type: Swift.Int)
+  @objc public func EnterAmazingBox(type: Swift.Int, uid: Swift.String, userToken: Swift.String, cid: Swift.String, nickName: Swift.String)
+  @objc public func Destroy()
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class AnswerSheetView : UIKit.UIView {
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class AVPlayerView : UIKit.UIView {
+  public func setUrl(url: Swift.String?, startPos: Swift.Int64 = 0)
+  public func stop()
+  @objc deinit
+}
+extension AVPlayerView : AliyunPlayer.AVPDelegate {
+  @objc dynamic public func onPlayerEvent(_ player: AliyunPlayer.AliPlayer!, eventType: AliyunPlayer.AVPEventType)
+  @objc dynamic public func onPlayerEvent(_ player: AliyunPlayer.AliPlayer!, eventWithString: AliyunPlayer.AVPEventWithString, description: Swift.String!)
+  @objc dynamic public func onError(_ player: AliyunPlayer.AliPlayer!, errorModel: AliyunPlayer.AVPErrorModel!)
+  @objc dynamic public func onVideoSizeChanged(_ player: AliyunPlayer.AliPlayer!, width: Swift.Int32, height: Swift.Int32, rotation: Swift.Int32)
+  @objc dynamic public func onCurrentPositionUpdate(_ player: AliyunPlayer.AliPlayer!, position: Swift.Int64)
+  @objc dynamic public func onBufferedPositionUpdate(_ player: AliyunPlayer.AliPlayer!, position: Swift.Int64)
+  @objc dynamic public func onLoadingProgress(_ player: AliyunPlayer.AliPlayer!, progress: Swift.Float)
+  @objc dynamic public func onCurrentDownloadSpeed(_ player: AliyunPlayer.AliPlayer!, speed: Swift.Int64)
+  @objc dynamic public func onTrackReady(_ player: AliyunPlayer.AliPlayer!, info: [AliyunPlayer.AVPTrackInfo]!)
+  @objc dynamic public func onChooseTrackIndex(_ player: AliyunPlayer.AliPlayer!, info: [AliyunPlayer.AVPTrackInfo]!) -> Swift.Int32
+  @objc dynamic public func onTrackChanged(_ player: AliyunPlayer.AliPlayer!, info: AliyunPlayer.AVPTrackInfo!)
+  @objc dynamic public func onSubtitleExtAdded(_ player: AliyunPlayer.AliPlayer!, trackIndex: Swift.Int32, url URL: Swift.String!)
+  @objc dynamic public func onSubtitleShow(_ player: AliyunPlayer.AliPlayer!, trackIndex: Swift.Int32, subtitleID: Swift.Int, subtitle: Swift.String!)
+  @objc dynamic public func onPlayerStatusChanged(_ player: AliyunPlayer.AliPlayer!, oldStatus: AliyunPlayer.AVPStatus, newStatus: AliyunPlayer.AVPStatus)
+  @objc dynamic public func onSEIData(_ player: AliyunPlayer.AliPlayer!, type: Swift.Int32, data: Foundation.Data!)
+  @objc dynamic public func onVideoRendered(_ player: AliyunPlayer.AliPlayer!, timeMs: Swift.Int64, pts: Swift.Int64)
+}
+extension AVPlayerView : AliyunPlayer.CicadaRenderingDelegate {
+}
+extension AVPlayerView : AliyunPlayer.CicadaAudioSessionDelegate {
+  @objc dynamic public func setActive(_ active: Swift.Bool) throws
+  @objc dynamic public func setCategory(_ category: Swift.String!, with options: AVFoundation.AVAudioSession.CategoryOptions = []) throws
+  @objc dynamic public func setCategory(_ category: AVFoundation.AVAudioSession.Category!, mode: AVFoundation.AVAudioSession.Mode!, routeSharingPolicy policy: AVFoundation.AVAudioSession.RouteSharingPolicy, options: AVFoundation.AVAudioSession.CategoryOptions = []) throws
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BrowerView : UIKit.UIView {
+  @objc deinit
+}
+extension BrowerView : RoomBoxUtils.RBWebViewRecordDelegate {
+  public func webViewDidStartLoad(webview: RoomBoxUtils.RBWKWebViewRecord)
+  public func webView(webview: RoomBoxUtils.RBWKWebViewRecord, didChangeTitle title: Swift.String)
+  public func scrollViewDidScroll(_ scrollView: UIKit.UIScrollView)
+  public func webView(webview: RoomBoxUtils.RBWKWebViewRecord, shouldStartWithURL url: Foundation.URL)
+  public func webView(webview: RoomBoxUtils.RBWKWebViewRecord, didFinishLoadingURL url: Foundation.URL)
+  public func webView(webview: RoomBoxUtils.RBWKWebViewRecord, didChangeProgress progress: Swift.Float)
+  public func webView(webview: RoomBoxUtils.RBWKWebViewRecord, didFailToLoadURL url: Foundation.URL, error: Foundation.NSError)
+  public func webViewWebContentProcessDidTerminate(webview: RoomBoxUtils.RBWKWebViewRecord)
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class ICWBrowerView : UIKit.UIView {
+  @objc deinit
+}
+extension ICWBrowerView : RoomBoxUtils.RBWebViewRecordDelegate {
+  public func webViewDidStartLoad(webview: RoomBoxUtils.RBWKWebViewRecord)
+  public func webView(webview: RoomBoxUtils.RBWKWebViewRecord, didChangeTitle title: Swift.String)
+  public func scrollViewDidScroll(_ scrollView: UIKit.UIScrollView)
+  public func webView(webview: RoomBoxUtils.RBWKWebViewRecord, shouldStartWithURL url: Foundation.URL)
+  public func webView(webview: RoomBoxUtils.RBWKWebViewRecord, didFinishLoadingURL url: Foundation.URL)
+  public func webView(webview: RoomBoxUtils.RBWKWebViewRecord, didChangeProgress progress: Swift.Float)
+  public func webView(webview: RoomBoxUtils.RBWKWebViewRecord, didFailToLoadURL url: Foundation.URL, error: Foundation.NSError)
+  public func webViewWebContentProcessDidTerminate(webview: RoomBoxUtils.RBWKWebViewRecord)
+}
+@_inheritsConvenienceInitializers @objc public class RoomBoxPlayerBundle : ObjectiveC.NSObject {
+  @objc deinit
+  @objc override dynamic public init()
+}
+@_inheritsConvenienceInitializers @objc public class RoomBoxPlayerChatPreviewImageModule : ObjectiveC.NSObject {
+  @objc public class func prepareConfig()
+  @objc public class func previewImage(urls: [Swift.String], selectedIndex: Swift.UInt32) -> UIKit.UIViewController?
+  @objc public class func createPhotos(urls: [Swift.String]) -> [RoomBoxUtils.RBPhotoProtocol]
+  @objc deinit
+  @objc override dynamic public init()
+}
+@_inheritsConvenienceInitializers @objc public class RoomBoxPlayerColorConfig : ObjectiveC.NSObject {
+  public static let rb_popup_txt_item_selected_l: Swift.String
+  public static let rb_popup_txt_item_selected_d: Swift.String
+  public static let rb_popup_txt_item_unselected_l: Swift.String
+  public static let rb_popup_txt_item_unselected_d: Swift.String
+  public static let rb_player_txt_title_l: Swift.String
+  public static let rb_player_txt_title_d: Swift.String
+  public static let rb_player_txt_time_l: Swift.String
+  public static let rb_player_txt_time_d: Swift.String
+  public static let rb_player_txt_time_sp_l: Swift.String
+  public static let rb_player_txt_time_sp_d: Swift.String
+  public static let rb_player_btn_txt_select_l: Swift.String
+  public static let rb_player_btn_txt_select_d: Swift.String
+  public static let rb_player_btn_txt_default_l: Swift.String
+  public static let rb_player_btn_txt_default_d: Swift.String
+  public static let rb_player_txt_normal34_l: Swift.String
+  public static let rb_player_txt_normal34_d: Swift.String
+  public static let rb_player_knowledge_cell_time_default_l: Swift.String
+  public static let rb_player_knowledge_cell_time_selected_l: Swift.String
+  public static let rb_player_knowledge_cell_des_selected_l: Swift.String
+  public static let rb_player_knowledge_cell_des_default_l: Swift.String
+  public static let rb_player_knowledge_cell_time_default_d: Swift.String
+  public static let rb_player_knowledge_cell_time_selected_d: Swift.String
+  public static let rb_player_knowledge_cell_des_selected_d: Swift.String
+  public static let rb_player_knowledge_cell_des_default_d: Swift.String
+  @objc deinit
+  @objc override dynamic public init()
+}
+@objc @_inheritsConvenienceInitializers public class RoomBoxPlayerColorPanelConvert : ObjectiveC.NSObject {
+  @objc public static func convert(fro: Swift.String) -> Swift.String
+  @objc deinit
+  @objc override dynamic public init()
+}
+@_inheritsConvenienceInitializers @objc public class RoomBoxPlayerColorPanelManager : ObjectiveC.NSObject {
+  @objc public static func config()
+  @objc public static func colorThemePicker(fro: Swift.String) -> XDFRoomCommonBussiness.XDFThemeColorPicker?
+  @objc public static func cgColorThemePicker(fro: Swift.String) -> XDFRoomCommonBussiness.XDFThemeCGColorPicker?
+  @objc deinit
+  @objc override dynamic public init()
+}
+@_inheritsConvenienceInitializers @objc public class RoomBoxPlayerImageThemeManager : ObjectiveC.NSObject {
+  @objc public class func themeImageWith(prefix: Swift.String, handle: XDFRoomCommonBussiness.XDFThemePicker.Handle? = nil) -> ObjectiveC.NSObject
+  public class func imageWith(prefix: Swift.String, theme: XDFRoomCommonBussiness.XDFTheme? = nil) -> UIKit.UIImage?
+  @objc public class func ocImageWith(prefix: Swift.String, themeValue: Swift.String? = nil) -> UIKit.UIImage?
+  @objc deinit
+  @objc override dynamic public init()
+}
+@_inheritsConvenienceInitializers @objc public class RoomBoxPlayerLogUtil : ObjectiveC.NSObject {
+  @objc public var cid: Swift.String?
+  @objc public var class_type: Swift.String?
+  @objc final public let RoomBoxPlayerLogEventActionKey: Swift.String
+  @objc final public let RoomBoxPlayerLogEventPlayRecord: Swift.String
+  @objc final public let RoomBoxPlayerLogEventDecodeVfps: Swift.String
+  @objc final public let RoomBoxPlayerLogEventRenderVfps: Swift.String
+  @objc final public let RoomBoxPlayerLogEventBitRate: Swift.String
+  @objc final public let RoomBoxPlayerLogEventTCPSpeed: Swift.String
+  @objc final public let RoomBoxPlayerLogEventPageIO: Swift.String
+  @objc final public let RoomBoxPlayerLogEventPlayCtrl: Swift.String
+  @objc final public let RoomBoxPlayerLogEventPlayResult: Swift.String
+  @objc final public let RoomBoxPlayerLogEventSpeedCtrl: Swift.String
+  @objc final public let RoomBoxPlayerLogEventAirplayPage: Swift.String
+  @objc final public let RoomBoxPlayerLogEventAirplayCtrl: Swift.String
+  @objc final public let RoomBoxPlayerLogEventKnowledgeView: Swift.String
+  @objc final public let RoomBoxPlayerLogEventKnowledgeLocate: Swift.String
+  @objc final public let RoomBoxPlayerLogEventKnowledgePage: Swift.String
+  @objc final public let RoomBoxPlayerLogEventSurfingMode: Swift.String
+  @objc final public let RoomBoxPlayerLogEventChatPage: Swift.String
+  @objc final public let RoomBoxPlayerLogEventSnapshot: Swift.String
+  @objc final public let RoomBoxPlayerLogEventMarkpoint: Swift.String
+  @objc public func addPlayerActionLog(eventId: Swift.String)
+  @objc public func addPlayerActionLog(eventId: Swift.String, key: Swift.String, value: Swift.String)
+  @objc public func addPlayerMatrixLog(eventId: Swift.String, key: Swift.String, value: Swift.String)
+  @objc public func addPlayerRecordLog(mainId: Swift.String?, records: [Swift.Int], lastRecord: Swift.Int)
+  @objc override dynamic public init()
+  @objc deinit
+}
+public struct RoomBoxPlayerNetConfig {
+  public static let requestWrongDefaultCode: Swift.String
+  public static let requestRightDefaultCode: Swift.String
+  public static let requestWrongMessage: Swift.String
+  public static let requestRightMessage: Swift.String
+  public static let requestNetWrongMessage: Swift.String
+  public static let requestVideoConfigUrlPath: Swift.String
+  public static let requestVideoRecordHistoryUrlPath: Swift.String
+  public static let requestNoteListUrlPath: Swift.String
+  public static let requestAddNoteUrlPath: Swift.String
+  public static let requestSDKLinkUrlPath: Swift.String
+  public static let requestDeleteNoteUrlPath: Swift.String
+  public static let requestChatHistoryUrlPath: Swift.String
+  public static let requestAddStarUrlPath: Swift.String
+}
+@_inheritsConvenienceInitializers @objc public class RoomBoxPlayerRequestDataModel : ObjectiveC.NSObject, RoomBoxUtils.RBHandyJSON {
+  @objc public var code: Swift.String?
+  @objc public var msg: Swift.String?
+  @objc public var data: [Swift.String : Any]?
+  @objc public var url: Swift.String?
+  @objc required override dynamic public init()
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @objc public class RoomBoxPlayerRequestManager : ObjectiveC.NSObject {
+  @objc public class func requestAddKnowledgeMark(parameters: [Swift.String : Swift.AnyObject]?, token: Swift.String, completionHandler: @escaping (RoomBoxPlayback.RoomBoxPlayerRequestDataModel?) -> (), errorHandler: @escaping (RoomBoxPlayback.RoomBoxPlayerRequestDataModel?) -> (), networkFailHandler: @escaping (Swift.Error) -> ())
+  @objc public class func requestPlayBackInfo(parameters: [Swift.String : Swift.AnyObject]?, token: Swift.String, completionHandler: @escaping (RoomBoxPlayback.RoomBoxPlayerRequestDataModel?) -> (), errorHandler: @escaping (RoomBoxPlayback.RoomBoxPlayerRequestDataModel?) -> (), networkFailHandler: @escaping (Swift.Error) -> ())
+  @objc public class func requestDeleteKnowledgeMark(noteId: Swift.String, token: Swift.String, completionHandler: @escaping (RoomBoxPlayback.RoomBoxPlayerRequestDataModel?) -> (), errorHandler: @escaping (RoomBoxPlayback.RoomBoxPlayerRequestDataModel?) -> (), networkFailHandler: @escaping (Swift.Error) -> ())
+  @objc public class func requestNoteList(classroomId: Swift.String, token: Swift.String, completionHandler: @escaping (RoomBoxPlayback.RoomBoxPlayerRequestDataModel?) -> (), errorHandler: @escaping (RoomBoxPlayback.RoomBoxPlayerRequestDataModel?) -> (), networkFailHandler: @escaping (Swift.Error) -> ())
+  @objc public class func requestRecordNoteList(classroomId: Swift.String, token: Swift.String, completionHandler: @escaping (RoomBoxPlayback.RoomBoxPlayerRequestDataModel?) -> (), errorHandler: @escaping (RoomBoxPlayback.RoomBoxPlayerRequestDataModel?) -> (), networkFailHandler: @escaping (Swift.Error) -> ())
+  @objc public class func requestChatHistory(cid: Swift.String, page: Swift.Int, pageSize: Swift.Int, token: Swift.String, completionHandler: @escaping (RoomBoxPlayback.RoomBoxPlayerRequestDataModel?) -> (), errorHandler: @escaping (RoomBoxPlayback.RoomBoxPlayerRequestDataModel?) -> (), networkFailHandler: @escaping (Swift.Error) -> ())
+  @objc public class func requestRecordHistory(cid: Swift.String, token: Swift.String, completionHandler: @escaping (RoomBoxPlayback.RoomBoxPlayerRequestDataModel?) -> (), errorHandler: @escaping (RoomBoxPlayback.RoomBoxPlayerRequestDataModel?) -> (), networkFailHandler: @escaping (Swift.Error) -> ())
+  @objc public class func requestVideoConfig(cid: Swift.String, token: Swift.String, completionHandler: @escaping (RoomBoxPlayback.RoomBoxPlayerRequestDataModel?) -> (), errorHandler: @escaping (RoomBoxPlayback.RoomBoxPlayerRequestDataModel?) -> (), networkFailHandler: @escaping (Swift.Error) -> ())
+  @objc public class func requestAddStar(cid: Swift.String, token: Swift.String, playTime: Swift.String, completionHandler: @escaping (RoomBoxPlayback.RoomBoxPlayerRequestDataModel?) -> (), errorHandler: @escaping (RoomBoxPlayback.RoomBoxPlayerRequestDataModel?) -> (), networkFailHandler: @escaping (Swift.Error) -> ())
+  @objc deinit
+  @objc override dynamic public init()
+}
+@_inheritsConvenienceInitializers @objc public class RoomBoxPlayerSacQuizController : RoomBoxUtils.RBBaseViewController {
+  public typealias RoomBoxWebViewCloseClosure = () -> Swift.Void
+  @objc public var closeClosure: RoomBoxPlayback.RoomBoxPlayerSacQuizController.RoomBoxWebViewCloseClosure?
+  @objc override dynamic open func viewDidLoad()
+  @objc deinit
+  @objc override dynamic public init(nibName nibNameOrNil: Swift.String?, bundle nibBundleOrNil: Foundation.Bundle?)
+  @objc required dynamic public init?(coder: Foundation.NSCoder)
+}
+extension RoomBoxPlayerSacQuizController {
+  @objc dynamic public func show(onView: UIKit.UIView, urlString: Swift.String, param: [Swift.String : Swift.String]? = nil)
+}
+extension RoomBoxPlayerSacQuizController : RoomBoxUtils.RBRotateProtocol {
+  @objc dynamic public func rbShouldAutorotate() -> Swift.Bool
+  @objc override dynamic public var supportedInterfaceOrientations: UIKit.UIInterfaceOrientationMask {
+    @objc get
+  }
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objc public class RoomBoxRecordKnowledgeCloseAlert : UIKit.UIView {
+  public typealias CloseClosure = () -> Swift.Void
+  @objc public var closeClosure: RoomBoxPlayback.RoomBoxRecordKnowledgeCloseAlert.CloseClosure?
+  public var descLabel: UIKit.UILabel {
+    get
+    set
+  }
+  public var disagreeButton: UIKit.UIButton {
+    get
+    set
+  }
+  public var agreeButton: UIKit.UIButton {
+    get
+    set
+  }
+  @objc deinit
+}
+extension RoomBoxRecordKnowledgeCloseAlert {
+  @objc dynamic public func hiddenCancleBtn()
+}
+@_inheritsConvenienceInitializers @objc public class RoomBoxRecordKnowledgeController : RoomBoxUtils.RBBaseViewController {
+  public typealias RoomBoxWebViewCloseClosure = () -> Swift.Void
+  @objc public var closeClosure: RoomBoxPlayback.RoomBoxRecordKnowledgeController.RoomBoxWebViewCloseClosure?
+  public var commonWKWebView: XDFRoomCommonBussiness.XDFCommonWKWebView {
+    get
+    set
+  }
+  @objc public func configWebUrl(urlString: Swift.String, param: [Swift.String : Swift.String]? = nil)
+  @objc override dynamic open func viewDidLoad()
+  @objc deinit
+  @objc override dynamic public init(nibName nibNameOrNil: Swift.String?, bundle nibBundleOrNil: Foundation.Bundle?)
+  @objc required dynamic public init?(coder: Foundation.NSCoder)
+}
+@_inheritsConvenienceInitializers public class RoomBoxPlayerThemeImagePicker : XDFRoomCommonBussiness.XDFThemeImagePicker {
+  override public class func configBundlePath() -> XDFRoomCommonBussiness.XDFThemePath?
+  required public init(v: @escaping XDFRoomCommonBussiness.XDFThemePicker.ValueType)
+  @objc deinit
+}

@@ -1,0 +1,271 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.3.2 (swiftlang-1200.0.45 clang-1200.0.32.28)
+// swift-module-flags: -target armv7-apple-ios10.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name RoomBoxConfigManager
+import Foundation
+@_exported import RoomBoxConfigManager
+import RoomBoxUtils
+import Swift
+import UIKit
+@objc @_inheritsConvenienceInitializers @objcMembers public class RoomBox : ObjectiveC.NSObject {
+  @objc public static var appId: Swift.String?
+  @objc public static var secretKey: Swift.String?
+  public typealias RoomBoxAuthCompletionClosure = (Swift.Bool, Swift.Error?) -> Swift.Void
+  @objc public class func currentVersion() -> Swift.String
+  @objc public class func startWithAppId(_ appId: Swift.String, secretKey: Swift.String)
+  @objc public class func setDebugMode(_ isDebug: Swift.Bool)
+  @objc public class func isDebugMode() -> Swift.Bool
+  @objc public class func setDevEnvironment(_ environment: RoomBoxConfigManager.RoomBoxDevEnvironment)
+  @objc public class func getDevEnvironment() -> RoomBoxConfigManager.RoomBoxDevEnvironment
+  @objc deinit
+  @objc override dynamic public init()
+}
+extension RoomBox {
+  @objc dynamic public class func isAuth(completion: @escaping RoomBoxConfigManager.RoomBox.RoomBoxAuthCompletionClosure)
+}
+public struct RoomBoxStaticH5Url {
+  public static let privacyUrlString: Swift.String
+  public static let enterpriseCertificateUrlString: Swift.String
+}
+public enum RoomBoxIMUrl : Swift.String {
+  case Release
+  public typealias RawValue = Swift.String
+  public init?(rawValue: Swift.String)
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public enum RoomBoxPath : Swift.String {
+  case Default
+  public enum H5 : Swift.String {
+    case Help
+    case Star
+    case Address
+    case StarTask
+    case Avatar
+    public typealias RawValue = Swift.String
+    public init?(rawValue: Swift.String)
+    public var rawValue: Swift.String {
+      get
+    }
+  }
+  public enum Cos : Swift.String {
+    case ImageDownload
+    public typealias RawValue = Swift.String
+    public init?(rawValue: Swift.String)
+    public var rawValue: Swift.String {
+      get
+    }
+  }
+  public typealias RawValue = Swift.String
+  public init?(rawValue: Swift.String)
+  public var rawValue: Swift.String {
+    get
+  }
+}
+@objc @_inheritsConvenienceInitializers @objcMembers public class RoomBoxApiConfig : ObjectiveC.NSObject {
+  @objc public class func getHttpHostUrl() -> Swift.String
+  @objc public class func getH5HostUrl() -> Swift.String
+  @objc public class func getSvcHostUrls() -> [Swift.String]
+  @objc public class func getCosHostUrl() -> Swift.String
+  @objc public class func getDataUrl() -> Swift.String
+  @objc public class func getWhiteBoardUrl() -> Swift.String
+  @objc public class func getIMUrl() -> Swift.String
+  @objc public class func getH5SSUrl() -> Swift.String
+  @objc deinit
+  @objc override dynamic public init()
+}
+@objc public enum RoomBoxDevEnvironment : Swift.Int {
+  case Release = 1
+  case Beta
+  case Dev
+  case Test
+  case Test2
+  case Test3
+  case Custom
+  public typealias RawValue = Swift.Int
+  public init?(rawValue: Swift.Int)
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc @_inheritsConvenienceInitializers @objcMembers public class RoomBoxConfigManager : ObjectiveC.NSObject {
+  @objc public class func setPersonalOrgAccountCharge(_ personalOrgAccountCharge: Swift.Bool)
+  @objc public class func getPersonalOrgAccountCharge() -> Swift.Bool
+  @objc public class func setPersonalOrgCertify(_ personalOrgCertify: Swift.Bool)
+  @objc public class func getPersonalOrgCertify() -> Swift.Bool
+  @objc public class func setQuickLive(_ quickLive: Swift.Bool)
+  @objc public class func getQuickLive() -> Swift.Bool
+  @objc public class func isDebug() -> Swift.Bool
+  @objc public class func isDebugMode() -> Swift.Bool
+  @objc public class func setOrganizationId(_ org: Swift.String)
+  @objc public class func getOrganizationId() -> Swift.String
+  @objc public class func getClientData() -> Swift.String?
+  @objc deinit
+  @objc override dynamic public init()
+}
+@objc @_inheritsConvenienceInitializers @objcMembers public class RoomBoxFuncConfig : ObjectiveC.NSObject {
+  @objc public class func atauthEnable() -> Swift.Bool
+  @objc public class func faceBeautyEnable() -> Swift.Bool
+  @objc public class func addressEnable() -> Swift.Bool
+  @objc public class func myStarEnable() -> Swift.Bool
+  @objc public class func airPlayEnable() -> Swift.Bool
+  @objc public class func profileEnable() -> Swift.Bool
+  @objc public class func findPasswordEnable() -> Swift.Bool
+  @objc public class func emergencyClassRoomEnable() -> Swift.Bool
+  @objc deinit
+  @objc override dynamic public init()
+}
+@objc @_inheritsConvenienceInitializers @objcMembers public class RoomBoxLiveCommerce : ObjectiveC.NSObject {
+  @objc public static var appId: Swift.String?
+  @objc public static var secretKey: Swift.String?
+  public typealias RoomBoxLiveCommerceAuthCompletionClosure = (Swift.Bool, Swift.Error?) -> Swift.Void
+  @objc public class func currentVersion() -> Swift.String
+  @objc public class func startWithAppId(_ appId: Swift.String, secretKey: Swift.String)
+  @objc public class func setDebugMode(_ isDebug: Swift.Bool)
+  @objc public class func isDebugMode() -> Swift.Bool
+  @objc public class func setDevEnvironment(_ environment: RoomBoxConfigManager.RoomBoxDevEnvironment)
+  @objc public class func getDevEnvironment() -> RoomBoxConfigManager.RoomBoxDevEnvironment
+  @objc deinit
+  @objc override dynamic public init()
+}
+extension RoomBoxLiveCommerce {
+  @objc dynamic public class func isAuth(completion: @escaping RoomBoxConfigManager.RoomBoxLiveCommerce.RoomBoxLiveCommerceAuthCompletionClosure)
+}
+public enum RoomBoxLivePull : Swift.String {
+  case Http
+  case Https
+  case Rtmp
+  public enum Monitor : Swift.String {
+    case Rtmp
+    public typealias RawValue = Swift.String
+    public init?(rawValue: Swift.String)
+    public var rawValue: Swift.String {
+      get
+    }
+  }
+  public typealias RawValue = Swift.String
+  public init?(rawValue: Swift.String)
+  public var rawValue: Swift.String {
+    get
+  }
+}
+@objc @_inheritsConvenienceInitializers @objcMembers public class RoomBoxLiveConfig : ObjectiveC.NSObject {
+  @objc public class func setAgoraId(_ agoraId: Swift.String)
+  @objc public class func getAgoraId() -> Swift.String?
+  @objc public class func setXdfRtcId(_ xdfRtcId: Swift.String)
+  @objc public class func getXdfRtcId() -> Swift.String?
+  @objc public class func setQuanShiId(_ QuanshiId: Swift.String)
+  @objc public class func getQuanShiId() -> Swift.String?
+  @objc deinit
+  @objc override dynamic public init()
+}
+public enum RoomBoxSLSConfig : Swift.String {
+  case EndPoint
+  case AccessKeyId
+  case AccessKeySecret
+  public static func goldenEyeProject() -> Swift.String
+  public static func logProject() -> Swift.String
+  public static func accessKeyId() -> Swift.String
+  public static func accessKeySecret() -> Swift.String
+  public typealias RawValue = Swift.String
+  public init?(rawValue: Swift.String)
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public enum RoomBoxLogUpLoadUrl : Swift.String {
+  case Release
+  case Debug
+  public static func url() -> Swift.String
+  public typealias RawValue = Swift.String
+  public init?(rawValue: Swift.String)
+  public var rawValue: Swift.String {
+    get
+  }
+}
+@objc @_inheritsConvenienceInitializers @objcMembers public class RoomBoxLogConfig : ObjectiveC.NSObject {
+  @objc public class func getGoldenEyeProject() -> Swift.String
+  @objc public class func getLogProject() -> Swift.String
+  @objc deinit
+  @objc override dynamic public init()
+}
+@objc @_inheritsConvenienceInitializers @objcMembers public class RoomBoxTextConfig : ObjectiveC.NSObject {
+  @objc public static var copyrightInfo: Swift.String
+  @objc public static let roomBoxProgressUnStart: Swift.String
+  @objc public static let roomBoxProgressStart: Swift.String
+  @objc public static let roomBoxProgressFinished: Swift.String
+  @objc public static let roomBoxMemberListTitle: Swift.String
+  @objc public static let userPrivacyText: Swift.String
+  @objc deinit
+  @objc override dynamic public init()
+}
+extension RoomBoxTextConfig {
+  @objc dynamic public class func getCopyrightTest() -> Swift.String
+}
+public enum RoomBoxGrowingIO {
+}
+public enum RoomBoxTingyun {
+}
+public enum RoomBoxBonree {
+}
+public enum RoomBoxLeBo {
+}
+public enum RoomBoxFaceUnity {
+}
+public enum RoomBoxATAuthSDK {
+}
+public enum RoomBoxCos {
+  public static func appId() -> Swift.String
+  public static func appKey() -> Swift.String
+}
+public enum RoomBoxOos : Swift.String {
+  case EndPoint
+  public static func bucket() -> Swift.String
+  public static func appId() -> Swift.String
+  public static func appKey() -> Swift.String
+  public typealias RawValue = Swift.String
+  public init?(rawValue: Swift.String)
+  public var rawValue: Swift.String {
+    get
+  }
+}
+@objc @_inheritsConvenienceInitializers @objcMembers public class RoomBoxThirdSDKConfig : ObjectiveC.NSObject {
+  @objc public class func getGrowingIOInfo() -> Swift.String
+  @objc public class func getTingyunInfo() -> Swift.String
+  @objc public class func getBonreeInfo() -> Swift.String
+  @objc public class func getLeBoAppId() -> Swift.String
+  @objc public class func getLeBoAppSec() -> Swift.String
+  @objc public class func getATAuthInfo() -> Swift.String
+  @objc deinit
+  @objc override dynamic public init()
+}
+extension RoomBoxConfigManager.RoomBoxIMUrl : Swift.Equatable {}
+extension RoomBoxConfigManager.RoomBoxIMUrl : Swift.Hashable {}
+extension RoomBoxConfigManager.RoomBoxIMUrl : Swift.RawRepresentable {}
+extension RoomBoxConfigManager.RoomBoxPath : Swift.Equatable {}
+extension RoomBoxConfigManager.RoomBoxPath : Swift.Hashable {}
+extension RoomBoxConfigManager.RoomBoxPath : Swift.RawRepresentable {}
+extension RoomBoxConfigManager.RoomBoxPath.H5 : Swift.Equatable {}
+extension RoomBoxConfigManager.RoomBoxPath.H5 : Swift.Hashable {}
+extension RoomBoxConfigManager.RoomBoxPath.H5 : Swift.RawRepresentable {}
+extension RoomBoxConfigManager.RoomBoxPath.Cos : Swift.Equatable {}
+extension RoomBoxConfigManager.RoomBoxPath.Cos : Swift.Hashable {}
+extension RoomBoxConfigManager.RoomBoxPath.Cos : Swift.RawRepresentable {}
+extension RoomBoxConfigManager.RoomBoxDevEnvironment : Swift.Equatable {}
+extension RoomBoxConfigManager.RoomBoxDevEnvironment : Swift.Hashable {}
+extension RoomBoxConfigManager.RoomBoxDevEnvironment : Swift.RawRepresentable {}
+extension RoomBoxConfigManager.RoomBoxLivePull : Swift.Equatable {}
+extension RoomBoxConfigManager.RoomBoxLivePull : Swift.Hashable {}
+extension RoomBoxConfigManager.RoomBoxLivePull : Swift.RawRepresentable {}
+extension RoomBoxConfigManager.RoomBoxLivePull.Monitor : Swift.Equatable {}
+extension RoomBoxConfigManager.RoomBoxLivePull.Monitor : Swift.Hashable {}
+extension RoomBoxConfigManager.RoomBoxLivePull.Monitor : Swift.RawRepresentable {}
+extension RoomBoxConfigManager.RoomBoxSLSConfig : Swift.Equatable {}
+extension RoomBoxConfigManager.RoomBoxSLSConfig : Swift.Hashable {}
+extension RoomBoxConfigManager.RoomBoxSLSConfig : Swift.RawRepresentable {}
+extension RoomBoxConfigManager.RoomBoxLogUpLoadUrl : Swift.Equatable {}
+extension RoomBoxConfigManager.RoomBoxLogUpLoadUrl : Swift.Hashable {}
+extension RoomBoxConfigManager.RoomBoxLogUpLoadUrl : Swift.RawRepresentable {}
+extension RoomBoxConfigManager.RoomBoxOos : Swift.Equatable {}
+extension RoomBoxConfigManager.RoomBoxOos : Swift.Hashable {}
+extension RoomBoxConfigManager.RoomBoxOos : Swift.RawRepresentable {}

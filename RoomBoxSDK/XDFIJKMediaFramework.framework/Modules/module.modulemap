@@ -1,0 +1,6 @@
+framework module XDFIJKMediaFramework {
+  umbrella header "XDFIJKMediaFramework.h"
+
+  export *
+  module * { export * }
+}

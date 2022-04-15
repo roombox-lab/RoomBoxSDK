@@ -1,0 +1,11 @@
+framework module RoomBoxConfigManager {
+  umbrella header "RoomBoxConfigManager-umbrella.h"
+
+  export *
+  module * { export * }
+}
+
+module RoomBoxConfigManager.Swift {
+    header "RoomBoxConfigManager-Swift.h"
+    requires objc
+}

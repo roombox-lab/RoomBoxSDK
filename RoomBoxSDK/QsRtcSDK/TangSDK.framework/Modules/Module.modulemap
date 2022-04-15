@@ -1,0 +1,16 @@
+//
+//  TangRtcEngineKit
+//
+//  Created by xiaoyu on 2021/4/23.
+//
+
+framework module TangSDK {
+
+    header "TangEnumerates.h"
+    header "TangObjects.h"
+    header "TangConstants.h"
+    header "TangLogWriter.h"
+    header "TangMediaIO.h"
+    header "TangMediaMetadata.h"
+    header "TangRtcEngineKit.h"
+}

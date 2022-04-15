@@ -1,0 +1,11 @@
+framework module RoomBoxUtils {
+  umbrella header "RoomBoxUtils-umbrella.h"
+
+  export *
+  module * { export * }
+}
+
+module RoomBoxUtils.Swift {
+    header "RoomBoxUtils-Swift.h"
+    requires objc
+}
